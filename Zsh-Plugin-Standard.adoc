@@ -14,15 +14,16 @@ in a particular way.
 
 At a simple level, a plugin:
 
-1. Has its directory added to `$fpath`
-  (link:http://zsh.sourceforge.net/Doc/Release/Functions.html#Autoloading-Functions[Zsh
-  documentation]). This is being done either by a plugin manager or by the
-  plugin itself (see link:#indicator[5th section] for more information).
-
-2. Has its first `\*.plugin.zsh` file sourced (or `*.zsh`, `init.zsh`, `*.sh`,
+1. Has its first `\*.plugin.zsh` file sourced (or `*.zsh`, `init.zsh`, `*.sh`,
    these are non-standard).
 
-The first point allows plugins to provide completions and functions that are
+2. If it adds any of its subdirectories to `$fpath`, then those subdirectories
+   should only contain function definition files. This allows for frameworks to
+   correctly link:http://zsh.sourceforge.net/Doc/Release/Functions.html#Autoloading-Functions[zcompile all functions].
+   It should not add its root directory to `$fpath`. For the same reason, plugin
+   managers should not add a plugin's root directory to `$fpath` either.
+
+The second point allows plugins to provide completions and functions that are
 loaded via Zsh’s `autoload` mechanism (a single function per-file).
 
 From a more broad perspective, a plugin consists of:
